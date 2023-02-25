@@ -3,49 +3,59 @@ package com.mycompany.foodmenu;
 
 import java.util.*;
 public class Foodmenu {
-
-        public final Map <String, Double> items;
-    
-    public Foodmenu(){
-        items = new HashMap<>();
+        private String FName = "";
+        private double FPrice = 0.0;
         
-    }
     
-    public void add(String n, double p){
-        
-        if (items.containsKey(n)){
-        System.out.println("Menu already exists!");
-        }else{items.put(n, p);
-        System.out.println("Added item : " + n + " to the menu for : " + p + " php.");
+        public Foodmenu(String n, int p){
+            
+            this.FName = n;
+            this.FPrice = p;
+            
         }
-    }
     
-    public void edit(String n, double p){
         
-        if (items.containsKey(n)){
-            items.put(n, p);
-        System.out.println("Changed price of : " + n + " to : " + n + " php.");
-        }else{
-            System.out.println( n + " is not on the menu");
-        }  
-    }
-    
-    public void display(){
         
-        if(items.isEmpty()){
-        System.out.println("No Food Entry Found!");
+        public void add(){
+            
+            for(int i = 0; i <10; i++){
+                if (this.FName.matches(FName)){
+                    System.out.println("Food already exists!");
+                }
+                else{
+                
+                    
+                
+                }
+            
+            }
+            
+           
+        
         }
-        System.out.println("Menu: ");
-        items.entrySet().forEach(entry -> {
-            System.out.println(entry.getKey()+ " : " + entry.getValue()+ " php.");
-            });
-    }
+        
+        public void edit(){
+            if(FName.equals(FName)){
+                
+            }
+            
+        }
+        
+        public void display(){
+        
+        
+        
+        }
+        
+        
+    
 
-    public static void main(String[] args) {
+    public void main(String[] args) {
         
         Scanner scan = new Scanner(System.in);
-        Foodmenu menu = new Foodmenu();
         boolean running = true;
+        
+        
         
         while(running){
         System.out.println("~~~~~~~~~~~~~~~~~~~");
@@ -60,35 +70,39 @@ public class Foodmenu {
         
         switch(Input){
             
-            case 1 -> {
+            case 1 : {
                 System.out.println("~~~~~~~~~~~~~~~~~~~");
                 System.out.println("Enter new menu item name:  ");
-                String NewName = scan.next();
+                String FName = scan.next();
                 System.out.println("Enter new menu item price: ");
-                double NewPrice = scan.nextDouble();
-                menu.add(NewName, NewPrice);
+                double FPrice = scan.nextDouble();
+                Foodmenu.add();
+                
+                
                 }
                
-            case 2 -> {
+            case 2 : {
                 System.out.println("~~~~~~~~~~~~~~~~~~~");
                 System.out.println("Enter new menu item name:  ");
-                String Newname = scan.next();
+                String FName = scan.next();
                 System.out.println("Enter new menu item price: ");
-                double Newprice = scan.nextDouble();
-                menu.edit(Newname, Newprice);
+                double FPrice = scan.nextDouble();
+                Foodmenu.edit();
                 }
                 
-            case 3 -> {
+            case 3 : {
                 System.out.println("~~~~~~~~~~~~~~~~~~~");
-                menu.display();
+                Foodmenu.display();
             }
             
-            case 4 -> {
+            case 4 : {
                 System.out.println("TERMINATING PROGRAM");
                 running = false;
                 break;
                 }
-            default -> System.out.println("Invalid Choice, Try Again");
+            default :
+                
+                System.out.println("Invalid Choice, Try Again");
         }
         }
     }
