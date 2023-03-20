@@ -1,5 +1,4 @@
 package com.mycompany.foodmenu;
-
 import java.util.*;
 public class Foodmenu {
     Scanner scan = new Scanner(System.in);
@@ -10,8 +9,20 @@ public class Foodmenu {
     this.name = n;
     this.price = p;}
 
-   public void add(String n,int p){
-       
+   public void add(String name, int price){
+    System.out.println("~~~~~~~~~~~~~~~~~~~");
+    System.out.println("Please add a menu");
+    String n = scan.nextLine();
+    this.name = n;
+        if (this.name.equals(name)){
+    System.out.println("Menu already exists!");}
+        else{
+    System.out.println("Please add it's price");
+    int p = scan.nextInt();
+    this.price = p;}
+    System.out.println("Menu added!");}
+   
+   public void edit(String n,int p){
        System.out.println("~~~~~~~~~~~~~~~~~~~");
        System.out.println("Please enter new name");
        String an = scan.next();System.out.println(an + " Successfully added to the menu");
@@ -25,8 +36,8 @@ public class Foodmenu {
    public void show(String name, int price){
        System.out.println("~~~~~~~~~~~~~~~~~~~");
                 System.out.println("1.      " + name + " : " + price + " php.");}
+   
    public static void main (String args[]){  
-    
     Foodmenu Food1 = new Foodmenu("", 0);
     Foodmenu Food2 = new Foodmenu("", 0);
     Foodmenu Food3 = new Foodmenu("", 0);
@@ -38,40 +49,51 @@ public class Foodmenu {
     Foodmenu Food9 = new Foodmenu("", 0);
     Foodmenu Food10 = new Foodmenu("", 0);
     boolean running = true;
-    
-    
+
     while(running){
         Scanner scan = new Scanner(System.in);
         System.out.println("~~~~~~~~~~~~~~~~~~~");
         System.out.println("Food menu: ");
         System.out.println("~~~~~~~~~~~~~~~~~~~");
-        System.out.println("1. Add/Edit Label");
-        System.out.println("2. View");
-        System.out.println("3. Exit");
+        System.out.println("1. Add");
+        System.out.println("2. Edit");
+        System.out.println("3. View");
+        System.out.println("4. Exit");
         System.out.println("~~~~~~~~~~~~~~~~~~~");
         int input = scan.nextInt();
     switch (input){
     
         case 1:{
+        System.out.println("~~~~~~~~~~~~~~~~~~~");
+        Food1.add("",0);
+        Food2.add("",0);
+        Food3.add("",0);
+        Food4.add("",0);
+        Food5.add("",0);
+        Food6.add("",0);
+        Food7.add("",0);
+        Food8.add("",0);
+        Food9.add("",0);
+        Food10.add("",0);break;}
+        
+        case 2:{
         System.out.println("Pick which item label(1 to 10): ");
         int put = scan.nextInt();
         
             switch (put){
-                case 1:{Food1.add("", 0);break;}
-                case 2:{Food2.add("", 0);break;}
-                case 3:{Food3.add("", 0);break;}
-                case 4:{Food4.add("", 0);break;}
-                case 5:{Food5.add("", 0);break;}
-                case 6:{Food6.add("", 0);break;}
-                case 7:{Food7.add("", 0);break;}
-                case 8:{Food8.add("", 0);break;}
-                case 9:{Food9.add("", 0);break;}
-                case 10:{Food10.add("", 0);break;}
-                default:{System.out.println("Invalid Choice, Try Again");}
-                break;
-        }}
+                case 1:{Food1.edit("", 0);break;}
+                case 2:{Food2.edit("", 0);break;}
+                case 3:{Food3.edit("", 0);break;}
+                case 4:{Food4.edit("", 0);break;}
+                case 5:{Food5.edit("", 0);break;}
+                case 6:{Food6.edit("", 0);break;}
+                case 7:{Food7.edit("", 0);break;}
+                case 8:{Food8.edit("", 0);break;}
+                case 9:{Food9.edit("", 0);break;}
+                case 10:{Food10.edit("", 0);break;}
+                default:{System.out.println("Invalid Choice, Try Again");}break;}}
     
-    case 2: {
+    case 3: {
                 System.out.println("~~~~~~~~~~~~~~~~~~~");
                 System.out.println("1.      " + Food1.name + " : " + Food1.price + " php.");
                 System.out.println("2.      " + Food2.name + " : " + Food2.price + " php.");
@@ -82,11 +104,9 @@ public class Foodmenu {
                 System.out.println("7.      " + Food7.name + " : " + Food7.price + " php.");
                 System.out.println("8.      " + Food8.name + " : " + Food8.price + " php.");
                 System.out.println("9.      " + Food9.name + " : " + Food9.price + " php.");
-                System.out.println("10.      " + Food10.name + " : " + Food10.price + " php.");
-            break;}
-    
-    
-    case 3:{
+                System.out.println("10.      " + Food10.name + " : " + Food10.price + " php.");break;}
+     
+    case 4:{
                 System.out.println("TERMINATING PROGRAM");
                 running = false;
                 break;}
