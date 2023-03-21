@@ -15,8 +15,6 @@ public class Foodmenu {
     String n = scan.next(); this.name = n;
     System.out.println("Please add it's price");
     int p = scan.nextInt(); this.price = p;
-    if (this.name.equals(Foodmenu.this.name)){
-    System.out.println("Menu label already occupied by an existing Food");}
     System.out.println("Menu added!Enter >y< to continue...");}
    
    public void edit(String n,int p){
