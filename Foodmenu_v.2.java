@@ -12,15 +12,12 @@ public class Foodmenu {
    public void add(String name, int price){
     System.out.println("~~~~~~~~~~~~~~~~~~~");
     System.out.println("Please add a menu");
-    String n = scan.nextLine();
-    this.name = n;
-        if (this.name.equals(name)){
-    System.out.println("Menu already exists!");}
-        else{
+    String n = scan.next(); this.name = n;
     System.out.println("Please add it's price");
-    int p = scan.nextInt();
-    this.price = p;}
-    System.out.println("Menu added!");}
+    int p = scan.nextInt(); this.price = p;
+    if (this.name.equals(Foodmenu.this.name)){
+    System.out.println("Menu label already occupied by an existing Food");}
+    System.out.println("Menu added!Enter >y< to continue...");}
    
    public void edit(String n,int p){
        System.out.println("~~~~~~~~~~~~~~~~~~~");
@@ -29,13 +26,11 @@ public class Foodmenu {
        System.out.println("Please enter it's new price");
        int ap = scan.nextInt();
        System.out.println("Price successfully established as: " + ap + "php."); 
-       this.name = an;
-       this.price = ap;
-       System.out.println("Menu label already occupied by an existing Food");}
+       this.name = an; this.price = ap;}
    
    public void show(String name, int price){
        System.out.println("~~~~~~~~~~~~~~~~~~~");
-                System.out.println("1.      " + name + " : " + price + " php.");}
+       System.out.println("1.      " + name + " : " + price + " php.");}
    
    public static void main (String args[]){  
     Foodmenu Food1 = new Foodmenu("", 0);
@@ -61,19 +56,20 @@ public class Foodmenu {
         System.out.println("4. Exit");
         System.out.println("~~~~~~~~~~~~~~~~~~~");
         int input = scan.nextInt();
+        
     switch (input){
     
         case 1:{
         System.out.println("~~~~~~~~~~~~~~~~~~~");
-        Food1.add("",0);
-        Food2.add("",0);
-        Food3.add("",0);
-        Food4.add("",0);
-        Food5.add("",0);
-        Food6.add("",0);
-        Food7.add("",0);
-        Food8.add("",0);
-        Food9.add("",0);
+        Food1.add("",0); String cont = scan.next(); if(!"y".equals(cont)){break;}
+        Food2.add("",0); cont = scan.next(); if(!"y".equals(cont)){break;}
+        Food3.add("",0); cont = scan.next(); if(!"y".equals(cont)){break;}
+        Food4.add("",0); cont = scan.next(); if(!"y".equals(cont)){break;}
+        Food5.add("",0); cont = scan.next(); if(!"y".equals(cont)){break;}
+        Food6.add("",0); cont = scan.next(); if(!"y".equals(cont)){break;}
+        Food7.add("",0); cont = scan.next(); if(!"y".equals(cont)){break;}
+        Food8.add("",0); cont = scan.next(); if(!"y".equals(cont)){break;}
+        Food9.add("",0); cont = scan.next(); if(!"y".equals(cont)){break;}
         Food10.add("",0);break;}
         
         case 2:{
