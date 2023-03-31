@@ -1,0 +1,72 @@
+package movement;
+
+import java.awt.Frame;
+import java.awt.Button;
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import java.awt.Color;
+
+public class Movement extends Frame implements ActionListener{
+    int objsize = 100;
+    int xpos = 50;
+    int ypos = 50;
+    int xlim = 1400;
+    int ylim = 1000;
+    
+    public void paint(Graphics g){super.paint(g);
+        g.setColor(Color.RED);     
+        g.fillOval(xpos, ypos, objsize, objsize);}
+    
+   public void actionPerformed(ActionEvent e){
+        Button btnClick = (Button) e.getSource();
+        String btnText = btnClick.getLabel();
+        System.out.println(btnText);
+        
+        switch(btnText) {
+            case "w":
+                ypos -= objsize;
+                if (ypos < 0) {ypos = 0;}
+                break;
+            case "s":
+                ypos += objsize;
+                if(ypos + objsize > ylim){
+                    ypos = ylim - objsize;}
+                break;
+            case "d":
+                xpos += objsize;
+                if(xpos + objsize > xlim){xpos = xlim - objsize;}
+                break;
+            case "a":
+                xpos -= objsize;
+                if(xpos < 0){ xpos = 0;}
+                break;
+            default:
+                break;}
+        repaint();}
+   
+    public static void main(String[] args){
+     Movement window = new Movement();
+        Button w = new Button("w");
+        Button s = new Button("s");
+        Button d = new Button("d");
+        Button a = new Button("a");
+        
+        w.setBounds(700,850, 50, 50);
+        s.setBounds(700,900,50, 50);
+        d.setBounds(750,900,50, 50);
+        a.setBounds(650, 900,50, 50);
+        w.addActionListener(window);
+        s.addActionListener(window);
+        d.addActionListener(window);
+        a.addActionListener(window);
+         
+        window.setSize(1400, 1000);
+        window.add(w);
+        window.add(s);
+        window.add(d);
+        window.add(a);
+        window.setTitle("Movement");
+        window.setLayout(null);
+        window.setVisible(true);}}
