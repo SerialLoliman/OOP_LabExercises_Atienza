@@ -1,0 +1,40 @@
+package pikagochi;
+
+import java.awt.Frame;
+import java.awt.Button;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class PikaGochi extends Frame implements ActionListener{
+   
+    public void actionPerformed(ActionEvent e){
+        Button btnClick = (Button) e.getSource();
+        String btnText = btnClick.getLabel();
+        System.out.println(btnText);
+        
+        repaint();}
+    
+    public static void main(String[] args) {
+        PikaGochi window = new PikaGochi();
+        Button newgame = new Button("Newgame");
+        Button load = new Button("Load");
+        Button petbook = new Button("Pet Book");
+        Button exit = new Button("Exit");
+        
+        newgame.setBounds(100,550, 100, 50);
+        load.setBounds(100,600,100, 50);
+        petbook.setBounds(100,650,100, 50);
+        exit.setBounds(100, 700,100, 50);
+        newgame.addActionListener(window);
+        load.addActionListener(window);
+        petbook.addActionListener(window);
+        exit.addActionListener(window);
+         
+        window.setSize(1400, 1000);
+        window.add(newgame);
+        window.add(load);
+        window.add(petbook);
+        window.add(exit);
+        window.setTitle("PetGochi");
+        window.setLayout(null);
+        window.setVisible(true);}}
