@@ -1,0 +1,47 @@
+package labexer5b;
+import java.util.*;
+
+public class LabExer5B {
+    private final String question;
+    private final String choices1; 
+    private final String choices2;
+    private final String choices3;
+public LabExer5B(String q, String c1, String c2, String c3){
+    
+this.question = q;
+this.choices1 = c1;
+this.choices2 = c2;
+this.choices3 = c3;
+  }
+   
+    
+    public static void main(String[] args){
+        
+        //try here
+        Scanner scan = new Scanner(System.in);
+        int score = 0;
+        LabExer5B Q1 = new LabExer5B("1+1= ?","A) 1","B) 2",") 3");
+        LabExer5B Q2 = new LabExer5B("2+2= ?","3","4","5");
+        LabExer5B Q3 = new LabExer5B("3+3= ?","5","6","7");
+        LabExer5B Q4 = new LabExer5B("4+4= ?","","","");
+        LabExer5B Q5 = new LabExer5B("5+5= ?","","","");
+        LabExer5B Q6 = new LabExer5B("6+6= ?","","","");
+        LabExer5B Q7 = new LabExer5B("7+7= ?","","","");
+        LabExer5B Q8 = new LabExer5B("8+8= ?","","","");
+        LabExer5B Q9 = new LabExer5B("9+9= ?","","","");
+        LabExer5B Q10 = new LabExer5B("10+10= ?","","","");
+        
+        
+        System.out.println(Q1.question);
+        System.out.println(Q1.choices1 + "   " + Q1.choices2 + "     " + Q1.choices3);
+        String input = scan.next();
+        switch (input){
+            case "a":
+                
+                
+        }
+        
+        
+    }
+    
+}
