@@ -30,6 +30,7 @@ public void ask(String q, String A, String B, String C,String ans){
             if(input.matches("[D-Zd-z]")){throw new ABCnt();}
             if(input.matches("[^A-Za-z0-9]")){throw new Letternt();}
             if(input.matches("[0-9]")){throw new Letternt();}
+            System.out.println("The answer is: "+this.answer);
             System.out.println("~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~");}
         catch (Letternt notletter){System.out.println("You didn't even pick a letter!");}
         catch (ABCnt notabc){System.out.println("The letter you picked was not a, b, or c. Please pick only one of those 3 ");}
