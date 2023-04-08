@@ -1,47 +1,63 @@
 package labexer5b;
-import java.util.*;
+import java.util.Scanner;
 
 public class LabExer5B {
     private final String question;
-    private final String choices1; 
-    private final String choices2;
-    private final String choices3;
-public LabExer5B(String q, String c1, String c2, String c3){
+    private final String choice1; 
+    private final String choice2;
+    private final String choice3;
+    private final char answer;
+    Scanner scan = new Scanner(System.in);
+    int score = 0;
+    
+public LabExer5B(String q, String A, String B, String C,char ans){
     
 this.question = q;
-this.choices1 = c1;
-this.choices2 = c2;
-this.choices3 = c3;
-  }
-   
-    
+this.choice1 = A;
+this.choice2 = B;
+this.choice3 = C;
+this.answer = ans;}
+
+private static class Letternt extends Exception {public Letternt() {super("Error: Non-letter found");}}
+private static class ABCnt extends Exception {public ABCnt() {super("Error: Imaginary choice found");}}
+
+public void ask(String q, String A, String B, String C,String ans){
+        try{System.out.println(this.question);
+            System.out.println(this.choice1 + "   " + this.choice2 + "     " + this.choice3);
+            String input = scan.nextLine().toUpperCase();
+            if (input.charAt(0) == this.answer){System.out.println("Correct!");score++;}
+            if(input.isEmpty()){throw new StringIndexOutOfBoundsException();}
+            if(input.matches("[D-Zd-z]")){throw new ABCnt();}
+            if(input.matches("[^A-Za-z0-9]")){throw new Letternt();}
+            if(input.matches("[0-9]")){throw new Letternt();}
+            System.out.println("~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~");}
+        catch (Letternt notletter){System.out.println("You didn't even pick a letter!");}
+        catch (ABCnt notabc){System.out.println("The letter you picked was not a, b, or c. Please pick only one of those 3 ");}
+        catch (StringIndexOutOfBoundsException e){System.out.println("Maybe you should type something");}
+        finally{System.out.println("Score: " + score + "/10");
+        System.out.println("~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~");}}
+        
     public static void main(String[] args){
         
-        //try here
-        Scanner scan = new Scanner(System.in);
-        int score = 0;
-        LabExer5B Q1 = new LabExer5B("1+1= ?","A) 1","B) 2",") 3");
-        LabExer5B Q2 = new LabExer5B("2+2= ?","3","4","5");
-        LabExer5B Q3 = new LabExer5B("3+3= ?","5","6","7");
-        LabExer5B Q4 = new LabExer5B("4+4= ?","","","");
-        LabExer5B Q5 = new LabExer5B("5+5= ?","","","");
-        LabExer5B Q6 = new LabExer5B("6+6= ?","","","");
-        LabExer5B Q7 = new LabExer5B("7+7= ?","","","");
-        LabExer5B Q8 = new LabExer5B("8+8= ?","","","");
-        LabExer5B Q9 = new LabExer5B("9+9= ?","","","");
-        LabExer5B Q10 = new LabExer5B("10+10= ?","","","");
+        LabExer5B Q1 = new LabExer5B("Ligma is a....?","A) Disease","B) Person","C) Meme",'C');
+        LabExer5B Q2 = new LabExer5B("Hitler is a...?","A) Car","B) Person","C) Formula",'B');
+        LabExer5B Q3 = new LabExer5B("Superman is a...?","A) Kryptonite","B) Man","C) A kryptonian man wearing an underwear on top of his suit",'C');
+        LabExer5B Q4 = new LabExer5B("Batman is a...?","A) Furry","B) Woman","C) An actual bat trying to be a man",'A');
+        LabExer5B Q5 = new LabExer5B("Traps are...?","A) Not gey","B) Kinda gey","C) Tools",'C');
+        LabExer5B Q6 = new LabExer5B("You know Joe?","A) Dunno","B) Yes","C) Who is Joe?",'C');
+        LabExer5B Q7 = new LabExer5B("Are Glass shards edible?","A) No","B) Yes","C) If you serve it with soysauce, then yes",'A');
+        LabExer5B Q8 = new LabExer5B("How does one infiltrate area 51?","A) With the help of your weaboo friends","B) You dont","C) Go solo, bring a rocket launcher and manifest your inner mangekyou sharingan",'B');
+        LabExer5B Q9 = new LabExer5B("Earth is...?","A) Flat","B) Round","C) A waifu",'B');
+        LabExer5B Q10 = new LabExer5B("The most compatible pokemon in terms of human-pokemon compatibility is...?","A) Gardevoir","B) Jinx","C) Vaporeon",'C');
         
-        
-        System.out.println(Q1.question);
-        System.out.println(Q1.choices1 + "   " + Q1.choices2 + "     " + Q1.choices3);
-        String input = scan.next();
-        switch (input){
-            case "a":
-                
-                
-        }
-        
-        
-    }
-    
-}
+        Q1.ask("","","","","");
+        Q2.ask("","","","","");
+        Q3.ask("","","","","");
+        Q4.ask("","","","","");
+        Q5.ask("","","","","");
+        Q6.ask("","","","","");
+        Q7.ask("","","","","");
+        Q8.ask("","","","","");
+        Q9.ask("","","","","");
+        Q10.ask("","","","","");
+        }}
