@@ -23,14 +23,33 @@ public class TamagochiGame extends JPanel implements ActionListener {
     private Timer timer;
     private Button play = new Button("Play");
     private Button rest = new Button("Rest");
-    
+   
     public TamagochiGame() {
-        setBackground(Color.WHITE);
-        setFocusable(true);
-        
-        timer = new Timer(250, this);
-        timer.start();
-    }
+    setBackground(Color.WHITE);
+    setFocusable(true);
+
+    timer = new Timer(5000, this);
+    timer.start();
+    
+    play.setBounds(10, 130, 80, 30);
+    play.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            happiness += 20;
+            hunger += 10;
+            energy -= 10;
+            health -= 10;
+            repaint();}});
+        add(play);
+
+    rest.setBounds(100, 130, 80, 30);
+    rest.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            happiness -= 10;
+            hunger -= 20;
+            energy += 20;
+            health += 20;
+            repaint();}});
+        add(rest);}
     
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -41,7 +60,10 @@ public class TamagochiGame extends JPanel implements ActionListener {
         g.drawString("Happiness: " + happiness, 10, 50);
         g.drawString("Health: " + health, 10, 75);
         g.drawString("Energy: " + energy, 10, 100);
-    }
+        if (happiness>100){happiness=100;}
+        if (hunger>100){hunger=100;}
+        if (energy>100){energy=100;}
+        if (health>100){health=100;}}
     
     public void actionPerformed(ActionEvent e) {
         hunger += rand.nextInt(10) + 1;
@@ -84,20 +106,15 @@ public class TamagochiGame extends JPanel implements ActionListener {
                             gameFrame.setSize(300, 150);
                             gameFrame.setLocationRelativeTo(null);
                             gameFrame.add(new TamagochiGame());
-                            gameFrame.setVisible(true);
-                        }
-                    });
+                            gameFrame.setVisible(true);}});
                     menuPanel.add(startButton);
                     menuFrame.add(menuPanel);
-                    menuFrame.setVisible(true);
-                }
-            });
+                    menuFrame.setVisible(true);}});
             gameOverPanel.add(returnButton);
             gameOverFrame.add(gameOverPanel);
-            gameOverFrame.setVisible(true);
-        }
-        repaint();
-    }
+            gameOverFrame.setVisible(true);}
+        repaint();}
+    
     public static void main(String[] args) {
         JFrame menuFrame = new JFrame("Tamagochi Game Menu");
         menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -118,11 +135,7 @@ public class TamagochiGame extends JPanel implements ActionListener {
                 gameFrame.setSize(300, 150);
                 gameFrame.setLocationRelativeTo(null);
                 gameFrame.add(new TamagochiGame());
-                gameFrame.setVisible(true);
-            }
-        });
+                gameFrame.setVisible(true);}});
         menuPanel.add(startButton);
         menuFrame.add(menuPanel);
-        menuFrame.setVisible(true);
-    }
-}
+        menuFrame.setVisible(true);}}
