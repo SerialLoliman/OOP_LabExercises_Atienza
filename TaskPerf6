@@ -1,4 +1,4 @@
-package its.tp;
+package taskperf6;
 
 import java.io.FileWriter;
 import java.io.File;
@@ -7,12 +7,11 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-public class ITsTP {
+public class TaskPerf6 {
 
 public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
-        
         
         while(running==true){
         System.out.println("Please select an option:");
@@ -21,10 +20,6 @@ public static void main(String[] args) {
         System.out.println("3. Exit");
         int selection = scanner.nextInt();
         scanner.nextLine();
-        
-        
-        
-        
         
         if (selection == 1) {
             System.out.print("Enter desired username (alphanumeric characters only): ");
