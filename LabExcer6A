@@ -1,0 +1,78 @@
+package labexer6A;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.File;
+import java.io.FileWriter;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
+import java.util.Random;
+
+public class LabExer6A{
+
+    private static final String WORDS_FILE_PATH = "D://AtienzaJava/words.txt";
+
+    public static void main(String[] args) {
+        String word = checkWord();
+        char[] guess = new char[word.length()];
+        Arrays.fill(guess, '?');
+        int Guesses = 0;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Welcome to Hitler's Word Holocaust!");
+        System.out.println("The word you need to guess has " + word.length() + " letters! Good luck!");
+
+        while (Guesses < 6) {
+            System.out.println("Guess a letter:");
+            char letter = scanner.nextLine().charAt(0);
+
+            if (word.indexOf(letter) == -1) {Guesses++;System.out.println("Oh no! that letter is not in the word... you have " + (6 - Guesses) + " chances to redeem yourself! do be careful as the word's letters are case-sensitive");}
+            else {
+                for (int i = 0; i < word.length(); i++) {
+                    if (word.charAt(i) == letter) {
+                        guess[i] = letter;}}
+
+                if (Arrays.equals(guess, word.toCharArray())) {System.out.println("Congratulations! You guessed the word: " + word + "! The Fuhrer is pleased!");return;} 
+                else {
+                    System.out.println(guess);}}}
+
+        System.out.println("The word was: " + word + " ...however, you seem to have disappointed the Fuhrer");}
+
+    private static String checkWord() {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(WORDS_FILE_PATH));
+            List<String> words = new ArrayList<>();
+            String line = reader.readLine();
+
+            while (line != null) {
+                words.add(line);
+                line = reader.readLine();}
+
+            reader.close();
+
+            if (words.isEmpty()) {
+                System.out.println("Please put words on the words.txt file located in D://AtienzaJava//");
+                System.exit(1);}
+
+            Random random = new Random();
+            return words.get(random.nextInt(words.size()));} 
+        catch (IOException e) {
+            System.err.println("Error reading word list: " + e.getMessage());
+            System.exit(1);
+            return null;}}
+
+    private static void makeWordsFileIfEmpty() {
+        try {
+            File file = new File(WORDS_FILE_PATH);
+
+            if (file.length() == 0) {
+                FileWriter writer = new FileWriter(file);
+                writer.write("nigger\njewish\ncommies\nnigga\nligma\nflammenwerfer\n");
+                writer.close();
+                System.out.println("words.txt has been created on D://AtienzaJava with pre-made words made by the fuhrer himself!");}} 
+        catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+            System.exit(1);}}
+
+    static {makeWordsFileIfEmpty();}}
