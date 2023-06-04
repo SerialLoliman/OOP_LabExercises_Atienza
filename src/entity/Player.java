@@ -13,7 +13,6 @@ import main.UtilityTool;
 
 public class Player extends Entity{
     
-    GamePanel gp;
     KeyHandler keyH;
     
     public final int screenX;
@@ -23,7 +22,7 @@ public class Player extends Entity{
     
     public Player(GamePanel gp, KeyHandler keyH){
     
-        this.gp = gp;
+        super(gp);
         this.keyH = keyH;
         
         screenX = gp.screenWidth/2-(gp.tileSize/2);
@@ -46,40 +45,33 @@ public class Player extends Entity{
     
     worldX = gp.tileSize * 23;
     worldY = gp.tileSize * 29;
-    speed = 4;
+    speed = 2;
     direction = "down";//shows starting image, if you leave this blank, you wont see where the character starts
+    
+    //PLAYER STATUS
+    maxLife = 6;
+    life = maxLife;
+    
     }
     public void getPlayerImage(){
     
-        up1 = setup("up1");
-        up2 = setup("up2");
-        up3 = setup("up3");
-        down1 = setup("down1");
-        down2 = setup("down2");
-        down3 = setup("down3");
-        left1 = setup("left1");
-        left2 = setup("left2");
-        left3 = setup("left3");
-        right1 = setup("right1");
-        right2 = setup("right2");
-        right3 = setup("right3");
+        up1 = setup("/res/player/char1/up1");
+        up2 = setup("/res/player/char1/up2");
+        up3 = setup("/res/player/char1/up3");
+        down1 = setup("/res/player/char1/down1");
+        down2 = setup("/res/player/char1/down2");
+        down3 = setup("/res/player/char1/down3");
+        left1 = setup("/res/player/char1/left1");
+        left2 = setup("/res/player/char1/left2");
+        left3 = setup("/res/player/char1/left3");
+        right1 = setup("/res/player/char1/right1");
+        right2 = setup("/res/player/char1/right2");
+        right3 = setup("/res/player/char1/right3");
         
     
     }
-    public BufferedImage setup(String imageName){
-    
-        UtilityTool uTool = new UtilityTool();
-        BufferedImage image = null;
-        
-        try{
-            image = ImageIO.read(getClass().getResourceAsStream("/res/player/char1/"+ imageName + ".png"));
-            image = uTool.scaleImage(image,gp.tileSize,gp.tileSize);
-              
-        }catch(IOException e){
-        e.printStackTrace();
-        }
-        return image;
-    }
+
+    @Override
     public void update(){
         
         if(keyH.upPressed == true||keyH.downPressed ==true||keyH.leftPressed ==true||keyH.rightPressed ==true){
@@ -104,6 +96,15 @@ public class Player extends Entity{
         int objIndex = gp.cChecker.checkObject(this,true);
         pickUpObject(objIndex);
         
+        
+        //CHECK NPC COLLISION
+        int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+        interactNPC (npcIndex);
+        
+        //CHECK EVENT
+        gp.eHandler.checkEvent();
+        gp.keyH.spacePressed = false;
+        gp.keyH.enterPressed = false;
         
         //IF COLLISION IS FALSE, PLAYER CAN MOVE
         if(collisionOn == false){
@@ -146,10 +147,10 @@ public class Player extends Entity{
                     hasKey--;
                     gp.ui.showMessage("You unlocked a door!");}
                     else{gp.ui.showMessage("You need a key!");}
-                    break;
+                    break;                                          
                 case "Boots":
                     gp.playSE(2);
-                    speed += 8;
+                    speed += 2;
                     gp.obj[i] = null;
                     gp.ui.showMessage("Movement increased!");
                     break;
@@ -157,11 +158,26 @@ public class Player extends Entity{
                     gp.ui.gameFinished = true;
                     gp.stopMusic();
                     gp.playSE(5);
+                    gp.obj[i] = null;
                     break;     
             }
         }
     }
     
+    public void interactNPC(int i){
+        
+        if(i != 999){
+             
+            if(gp.keyH.enterPressed == true){
+            gp.gameState = gp.dialogueState;
+            gp.npc[i].speak();
+                
+            }
+        
+        }
+    }
+    
+    @Override
     public void draw(Graphics2D g2){
     
 //        g2.setColor(Color.white);
