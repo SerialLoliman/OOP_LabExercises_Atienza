@@ -27,9 +27,9 @@ public class EventHandler {
     public void checkEvent(){
         
         //EVENT HITBOX LOCATIONS
-        if(hit(20, 40, "any") == true){teleport(gp.dialogueState);}
-        if(hit(24, 40, "any") == true){damagePit(gp.dialogueState);}
-        if(hit(22, 40, "any") == true){healingPool(gp.dialogueState);}
+//        if(hit(20, 40, "any") == true){teleport(gp.dialogueState);}
+//        if(hit(24, 40, "any") == true){damagePit(gp.dialogueState);}
+//        if(hit(22, 40, "any") == true){healingPool(gp.dialogueState);}
     }
     
     public boolean hit(int eventCol, int eventRow, String reqDirection){
@@ -59,8 +59,8 @@ public class EventHandler {
         
         gp.gameState = gameState;
         gp.ui.currentDialogue = "TELEPORT";
-        gp.player.worldX = gp.tileSize*25;
-        gp.player.worldY = gp.tileSize*25;
+        gp.player.worldX = gp.tileSize*17;
+        gp.player.worldY = gp.tileSize*40;
         
     }
     
@@ -76,12 +76,12 @@ public class EventHandler {
         
         System.out.println("HEAL");
 
-//        if(gp.keyH.enterPressed == true){
+        if(gp.keyH.enterPressed == true){
             gp.gameState = gameState;
             gp.ui.currentDialogue = "Hydrated. \n Restored hp";
             gp.player.life = gp.player.maxLife;
             
-//        }
+        }
         
     }
 

@@ -33,10 +33,10 @@ public class NPC_OldMan extends Entity {
     }
         public void setDialogue(){
             
-            dialogues[0] = "This island here is but a figment\nof it's past glory...\nThe animals here have mutated into\n slimes, same as you...";
-            dialogues[1] = "If you wish to redeem this place,\nit would be wise if you would get\nstronger....";
-            dialogues[2] = "Strong enough to not die...\nstrong enough to fight...\nstrong enough to uncover the truth...";
-            dialogues[3] = "And strong enough to save this\n irredeemable island...\nGo young slime... \nfind out it's mystery";
+            dialogues[0] = "IN THE FIRST AGE, THE FIRST\nBATTLE,ONE STOOD,BURNED BY\nTHE FIRES OF HATRED, HE SCOURED\nTHE UMBRAL PLAINS";
+            dialogues[1] = "AGAINST ALL THE EVILS\nTHAT HELL CAN CONJURE\nALL THE WICKEDNESS MAN\nCAN PRODUCE";
+            dialogues[2] = "WE WILL SEND UNTO THEM\nONLY YOU";
+            dialogues[3] = "Aking pinusta sa manok napola";
 
             
         }

@@ -1,28 +1,18 @@
 
 package object;
 
-import javax.imageio.ImageIO;
+import entity.Entity;
 import main.GamePanel;
 
-public class OBJ_Heart extends SuperObject{
-        
-    GamePanel gp;
+public class OBJ_Heart extends Entity{
     
     public OBJ_Heart(GamePanel gp){
+    super(gp);
     
-    name = "Key";
-    try{
-        image = ImageIO.read(getClass().getResourceAsStream("/res/objects/heartF.png"));
-        image2 = ImageIO.read(getClass().getResourceAsStream("/res/objects/heartH.png"));
-        image3 = ImageIO.read(getClass().getResourceAsStream("/res/objects/heartE.png"));
-        
-        image = uTool.scaleImage(image, gp.tileSize,gp.tileSize);
-        image2 = uTool.scaleImage(image2, gp.tileSize,gp.tileSize);
-        image3 = uTool.scaleImage(image3, gp.tileSize,gp.tileSize);
-    
-    }catch(Exception e){
-    e.printStackTrace();
-    }
-    
+    name = "Heart";
+    image = setup("/res/objects/heartF");
+    image = setup("/res/objects/heartH");
+    image = setup("/res/objects/heartE");
+
     }
 }

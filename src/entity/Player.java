@@ -5,10 +5,12 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import main.GamePanel;
 import main.KeyHandler;
 import main.UtilityTool;
+import object.OBJ_Key;
 
 
 public class Player extends Entity{
@@ -18,7 +20,10 @@ public class Player extends Entity{
     public final int screenX;
     public final int screenY;
     
-    public int hasKey = 0;
+    int hasKey = 0;
+    
+    public ArrayList<Entity> inventory = new ArrayList<>();
+//    public final int maxInventorySize = 20;
     
     public Player(GamePanel gp, KeyHandler keyH){
     
@@ -38,6 +43,7 @@ public class Player extends Entity{
         
         setDefaultValues();
         getPlayerImage();
+        setItems();
     }
 
 
@@ -49,9 +55,31 @@ public class Player extends Entity{
     direction = "down";//shows starting image, if you leave this blank, you wont see where the character starts
     
     //PLAYER STATUS
+    level = 1;
     maxLife = 6;
     life = maxLife;
+    strength = 1; //MORE STR = MORE ATK
+    dexterity =1; //MORE DEX = MORE DEF
+    exp = 0;
+    nextLevelExp = 5;
+    coin = 0;
+    attack = getAttack(); //TOTAL ATK FROM STRENGHTH & WEP
+    defense = getDefense(); //TOTAL DEF FROM DEX & SHLD
     
+    //currentWeapon
+    //currentShield
+    
+    }
+    public void setItems(){
+//        inventory.add(new OBJ_Key(gp));
+//        inventory.add(currentWeapon);
+//        inventory.add(currentShield);
+    }
+    public int getAttack(){
+        return attack = strength; //*currentAttack.attackValue;
+    }
+    public int getDefense(){
+        return defense = dexterity; //*currentShield.defenseValue;
     }
     public void getPlayerImage(){
     
