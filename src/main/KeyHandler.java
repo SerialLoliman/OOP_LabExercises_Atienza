@@ -7,7 +7,7 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener{
     
     GamePanel gp;
-    public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed, spacePressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed, spacePressed, shotKeyPressed;
     
     //DEBUG
     boolean checkDrawTime = false;
@@ -103,8 +103,12 @@ public class KeyHandler implements KeyListener{
         }
         
         //OPEN CHARACTER STATS
-        if(code == KeyEvent.VK_I){
+        if(code == KeyEvent.VK_E){
             gp.gameState = gp.characterState;
+        }
+        //PROJECTILE
+        if(code == KeyEvent.VK_X){
+            shotKeyPressed = true;
         }
         
         
@@ -131,7 +135,7 @@ public class KeyHandler implements KeyListener{
     public void characterState(int code){
         
         //INVENTORY
-        if(code == KeyEvent.VK_I){
+        if(code == KeyEvent.VK_E){
         gp.gameState = gp.playState;
         }
         
@@ -159,17 +163,18 @@ public class KeyHandler implements KeyListener{
             gp.ui.slotCol++;
             }
         }
+        if(code == KeyEvent.VK_SPACE){
+            gp.player.selectItem();
+        }
     }
     @Override
     public void keyReleased(KeyEvent e){
     
-        
         int code = e.getKeyCode();
         
         if(code == KeyEvent.VK_UP){
             upPressed = false;
         }
-        
         if(code == KeyEvent.VK_DOWN){
             downPressed = false;
         }
@@ -187,10 +192,11 @@ public class KeyHandler implements KeyListener{
         if(code == KeyEvent.VK_SPACE){
             spacePressed = false;
         }
+        if(code == KeyEvent.VK_X){
+            shotKeyPressed = false;
+        }
     }
-    
 }
-
 
 //CHARACTER SELECT       
 //        else if(gp.ui.titleScreenState == 1){

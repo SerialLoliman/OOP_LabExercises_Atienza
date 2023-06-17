@@ -9,6 +9,7 @@ public class NPC_OldMan extends Entity {
         
         super(gp);
         
+        type = type_npc;
         direction = "down";
         speed = 0;
         
@@ -17,18 +18,18 @@ public class NPC_OldMan extends Entity {
     }
         public void getImage(){
     
-        up1 = setup("/res/npc/oldman/char1");
-        up2 = setup("/res/npc/oldman/char1");
-        up3 = setup("/res/npc/oldman/char1");
-        down1 = setup("/res/npc/oldman/char1");
-        down2 = setup("/res/npc/oldman/char1");
-        down3 = setup("/res/npc/oldman/char1");
-        left1 = setup("/res/npc/oldman/char1");
-        left2 = setup("/res/npc/oldman/char1");
-        left3 = setup("/res/npc/oldman/char1");
-        right1 = setup("/res/npc/oldman/char1");
-        right2 = setup("/res/npc/oldman/char1");
-        right3 = setup("/res/npc/oldman/char1");
+        up1 = setup("/res/npc/oldman/char1", gp.tileSize, gp.tileSize);
+        up2 = setup("/res/npc/oldman/char1", gp.tileSize, gp.tileSize);
+        up3 = setup("/res/npc/oldman/char1", gp.tileSize, gp.tileSize);
+        down1 = setup("/res/npc/oldman/char1", gp.tileSize, gp.tileSize);
+        down2 = setup("/res/npc/oldman/char1", gp.tileSize, gp.tileSize);
+        down3 = setup("/res/npc/oldman/char1", gp.tileSize, gp.tileSize);
+        left1 = setup("/res/npc/oldman/char1", gp.tileSize, gp.tileSize);
+        left2 = setup("/res/npc/oldman/char1", gp.tileSize, gp.tileSize);
+        left3 = setup("/res/npc/oldman/char1", gp.tileSize, gp.tileSize);
+        right1 = setup("/res/npc/oldman/char1", gp.tileSize, gp.tileSize);
+        right2 = setup("/res/npc/oldman/char1", gp.tileSize, gp.tileSize);
+        right3 = setup("/res/npc/oldman/char1", gp.tileSize, gp.tileSize);
         
     }
         public void setDialogue(){

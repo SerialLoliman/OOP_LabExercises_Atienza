@@ -1,7 +1,6 @@
 package object;
 
 import entity.Entity;
-import javax.imageio.ImageIO;
 import main.GamePanel;
 
 public class OBJ_Boots extends Entity{
@@ -10,7 +9,7 @@ public class OBJ_Boots extends Entity{
     super(gp);
     
     name = "Boots";
-    down1 = setup("/res/objects/boots");
+    down1 = setup("/res/objects/boots", gp.tileSize, gp.tileSize);
     
     }
 }
