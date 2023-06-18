@@ -206,21 +206,21 @@ public void drawTitleScreen(){
         g2.drawString(">", x-gp.tileSize, y);
     }
     
-    g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20));
-    text = "LOAD GAME";
-    x = getXforCenteredText(text);
-    y += gp.tileSize;
-    g2.drawString(text, x, y);
-    if(commandNum == 1){
-        g2.drawString(">", x-gp.tileSize, y);
-    }
+    // g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20));
+    // text = "LOAD GAME";
+    // x = getXforCenteredText(text);
+    // y += gp.tileSize;
+    // g2.drawString(text, x, y);
+    // if(commandNum == 1){
+    //     g2.drawString(">", x-gp.tileSize, y);
+    // }
         
     g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20));
     text = "QUIT TO DESKTOP";
     x = getXforCenteredText(text);
     y += gp.tileSize;
     g2.drawString(text, x, y);
-    if(commandNum == 2){
+    if(commandNum == 1/*CHANGE THIS BACK TO 2 IF YOU RE-IMPLEMENT THE LOAD GAME*/){
         g2.drawString(">", x-gp.tileSize, y);
     }
     }
