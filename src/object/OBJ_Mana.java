@@ -10,7 +10,7 @@ public class OBJ_Mana extends Entity {
         super(gp);
         this.gp = gp;
         type = type_pickupOnly;
-        name = "Mana Crystal";
+        name = "Energy Crystal";
         down1 = setup("/res/objects/manaF", gp.tileSize, gp.tileSize);
         image = setup("/res/objects/manaF", gp.tileSize, gp.tileSize);
         image2 = setup("/res/objects/manaE", gp.tileSize, gp.tileSize);

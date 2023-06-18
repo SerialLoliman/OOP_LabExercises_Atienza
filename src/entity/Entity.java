@@ -17,7 +17,7 @@ public class Entity {
     public String name;
     public int speed;
     
-    public BufferedImage up1, up2,up3, down1, down2, down3, left1, left2, left3, right1, right2, right3;
+    public BufferedImage up1, up2,up3, down1, down2, down3, left1, left2, left3, right1, right2, right3, sleep;
     public BufferedImage attackUp1, attackUp2,attackDown1,attackDown2, attackLeft1, attackLeft2, attackRight1, attackRight2;
     public BufferedImage image, image2, image3;
     
@@ -68,6 +68,10 @@ public class Entity {
     public int exp;
     public int nextLevelExp;
     public int coin;
+    public String hunger;
+    public int hungerPoints = 10000;
+    public String fatigue;
+    public int fatiguePoints = 100;
     public Entity currentWeapon;
     public Entity currentShield;
     public Projectile projectile;
@@ -93,6 +97,7 @@ public class Entity {
     public Entity (GamePanel gp){
         this.gp = gp;
     }
+    
     public void setAction(){}
     public void damageReaction(){}
     public void speak(){
@@ -183,6 +188,7 @@ public class Entity {
                 damage = 0;
             }
                 gp.player.life -= damage;
+                gp.player.fatiguePoints--;
                 gp.player.invincible = true;
             }
     }

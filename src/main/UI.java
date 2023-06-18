@@ -307,9 +307,9 @@ public void drawCharaterScreen(){
     //NAMES
     g2.drawString("LEVEL", textX, textY);
     textY += lineHeight;
-    g2.drawString("LIFE", textX, textY);
+    g2.drawString("HEALTH", textX, textY);
     textY += lineHeight;
-    g2.drawString("MANA", textX, textY);
+    g2.drawString("ENERGY", textX, textY);
     textY += lineHeight;
     g2.drawString("STRENGTH", textX, textY);
     textY += lineHeight;
@@ -324,10 +324,14 @@ public void drawCharaterScreen(){
     g2.drawString("NEXT LEVEL", textX, textY);
     textY += lineHeight;
     g2.drawString("COIN", textX, textY);
-    textY += lineHeight + 20;
-    g2.drawString("WEAPON", textX, textY);
-    textY += lineHeight + 15;
-    g2.drawString("SHIELD", textX, textY);
+    textY += lineHeight; //+ 20;//(Weapon and Shield)
+//    g2.drawString("WEAPON", textX, textY);
+//    textY += lineHeight + 15;
+//    g2.drawString("SHIELD", textX, textY);
+//    textY += lineHeight;
+    g2.drawString("FATIGUE", textX, textY);
+    textY += lineHeight;
+    g2.drawString("HUNGER", textX, textY);
     textY += lineHeight;
     
     //VALUES
@@ -385,10 +389,22 @@ public void drawCharaterScreen(){
     textX = getXforAlignToRightText(value, tailX);
     g2.drawString(value, textX, textY);
         textY += lineHeight;
+//SWORD AND SHIELD IMAGES IN STATUS BAR
+//    g2.drawImage(gp.player.currentWeapon.down1, tailX - gp.tileSize, textY - 14, null);
+//    textX += gp.tileSize;
+//    g2.drawImage(gp.player.currentShield.down1, tailX - gp.tileSize, textY + 34, null);
 
-    g2.drawImage(gp.player.currentWeapon.down1, tailX - gp.tileSize, textY - 14, null);
-    textX += gp.tileSize;
-    g2.drawImage(gp.player.currentShield.down1, tailX - gp.tileSize, textY + 34, null);
+    //FATIGUE
+    value = String.valueOf(gp.player.fatigue);
+    textX = getXforAlignToRightText(value, tailX);
+    g2.drawString(value, textX, textY);
+        textY += lineHeight;
+    //HUNGER
+    value = String.valueOf(gp.player.hunger);
+    textX = getXforAlignToRightText(value, tailX);
+    g2.drawString(value, textX, textY);
+        textY += lineHeight;
+
     
 }
 public void drawInventory(){

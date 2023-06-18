@@ -7,7 +7,7 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener{
     
     GamePanel gp;
-    public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed, spacePressed, shotKeyPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed, spacePressed, shotKeyPressed, sleeping;
     
     //DEBUG
     boolean checkDrawTime = false;
@@ -60,7 +60,7 @@ public class KeyHandler implements KeyListener{
             }
         }
         
-        if(code == KeyEvent.VK_SPACE){
+        if(code == KeyEvent.VK_Z){
             //NEW GAME
             if(gp.ui.commandNum == 0){
                 gp.gameState = gp.playState;
@@ -97,9 +97,18 @@ public class KeyHandler implements KeyListener{
             gp.gameState = gp.pauseState;
         }
         
-        //START DIALOGUE
-        if(code == KeyEvent.VK_SPACE){
+        //START DIALOGUE & ATTACK
+        if(code == KeyEvent.VK_Z){
             spacePressed = true;
+            gp.player.fatiguePoints--;
+        }
+        
+        //SLEEP
+        if(code == KeyEvent.VK_S){
+            if(sleeping == true){sleeping = false;}
+            else{
+                sleeping = true; 
+                gp.player.fatiguePoints = 1000;}
         }
         
         //OPEN CHARACTER STATS
@@ -109,6 +118,7 @@ public class KeyHandler implements KeyListener{
         //PROJECTILE
         if(code == KeyEvent.VK_X){
             shotKeyPressed = true;
+            gp.player.fatiguePoints--;
         }
         
         
@@ -128,7 +138,7 @@ public class KeyHandler implements KeyListener{
             }
     }
     public void dialogueState(int code){
-            if (code == KeyEvent.VK_SPACE){
+            if (code == KeyEvent.VK_Z){
             gp.gameState = gp.playState;
             }
     }
@@ -163,7 +173,7 @@ public class KeyHandler implements KeyListener{
             gp.ui.slotCol++;
             }
         }
-        if(code == KeyEvent.VK_SPACE){
+        if(code == KeyEvent.VK_Z){
             gp.player.selectItem();
         }
     }
@@ -189,7 +199,7 @@ public class KeyHandler implements KeyListener{
         if(code == KeyEvent.VK_ENTER){
             enterPressed = false;
         }
-        if(code == KeyEvent.VK_SPACE){
+        if(code == KeyEvent.VK_Z){
             spacePressed = false;
         }
         if(code == KeyEvent.VK_X){

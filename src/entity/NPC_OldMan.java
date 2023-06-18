@@ -34,10 +34,10 @@ public class NPC_OldMan extends Entity {
     }
         public void setDialogue(){
             
-            dialogues[0] = "IN THE FIRST AGE, THE FIRST\nBATTLE,ONE STOOD,BURNED BY\nTHE FIRES OF HATRED, HE SCOURED\nTHE UMBRAL PLAINS";
-            dialogues[1] = "AGAINST ALL THE EVILS\nTHAT HELL CAN CONJURE\nALL THE WICKEDNESS MAN\nCAN PRODUCE";
-            dialogues[2] = "WE WILL SEND UNTO THEM\nONLY YOU";
-            dialogues[3] = "Aking pinusta sa manok napola";
+            dialogues[0] = "Press >E< to check your\ninventory and stats " ;
+            dialogues[1] = "Press >Z< to use your melee\nor interact";
+            dialogues[2] = "Press >X< to use your skill\nrock throw";
+            dialogues[3] = "Be careful out there";
 
             
         }

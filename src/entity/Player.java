@@ -8,7 +8,9 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.TimerTask;
 import javax.imageio.ImageIO;
+import java.util.Timer;
 import main.GamePanel;
 import main.KeyHandler;
 import main.UtilityTool;
@@ -77,6 +79,10 @@ public class Player extends Entity{
     exp = 0;
     nextLevelExp = 5;
     coin = 0;
+    hunger = "Full";
+    hungerPoints = 100000;
+    fatigue = "Relaxed";
+    fatiguePoints = 1000;
     currentWeapon = new OBJ_Sword(gp);
     currentShield = new OBJ_Shield(gp);
     projectile = new OBJ_Fireball(gp);
@@ -110,8 +116,8 @@ public class Player extends Entity{
         right1 = setup("/res/player/char1/right1", gp.tileSize, gp.tileSize);
         right2 = setup("/res/player/char1/right2", gp.tileSize, gp.tileSize);
         right3 = setup("/res/player/char1/right3", gp.tileSize, gp.tileSize);
-        
     }
+    
     
     public void getPlayerAttackImage(){
         
@@ -125,6 +131,7 @@ public class Player extends Entity{
         attackRight2 = setup("/res/player/char1/attackRight2", gp.tileSize , gp.tileSize);
 
     }
+    
     
     @Override
     public void update(){
@@ -206,7 +213,46 @@ public class Player extends Entity{
     if(mana > maxMana){
         mana = maxMana;
     }
+    
+    //SLEEP
+    if (gp.keyH.sleeping == true){gp.player.speed = 0;}
+    if (gp.keyH.sleeping == false){gp.player.speed = 3;}//always change this to default speed
+    
+    //HUNGER
+    if (hungerPoints >100000){hungerPoints = 100000;} //sets max hungerPoints
+    if (hungerPoints <0){hungerPoints = 0;} //sets min hungerPoints
+    if (hungerPoints > 0 && hungerPoints < 100001) {hungerPoints--;}//decay
+        if (hungerPoints >= 80000) {
+            hunger = "Full";
+        } else if (hungerPoints >= 60000) {
+            hunger = "Normal";
+        } else if (hungerPoints >= 40000) {
+            hunger = "Hungry";
+        } else if (hungerPoints >= 20000) {
+            hunger = "Starving";
+        } else {
+            hunger = "Dying";
+        }
+        
+        //FATIGUE
+    if (fatiguePoints >1000){fatiguePoints = 1000;} //sets max hungerPoints
+    if (fatiguePoints <0){fatiguePoints = 0;} //sets min hungerPoints
+        if (fatiguePoints >= 800) {
+            fatigue = "Relaxed";
+        } else if (fatiguePoints >= 600) {
+            fatigue = "Normal";
+        } else if (fatiguePoints >= 400) {
+            fatigue = "Stressed";
+        } else if (fatiguePoints >= 200) {
+            fatigue = "Tired";
+        } else {
+            fatigue = "Fainting";
+        }
 }
+    
+    
+
+
     public void attacking(){
         
         spriteCounter++;
@@ -292,6 +338,7 @@ public class Player extends Entity{
                     damage = 0;
                 }
                 life -= damage;
+                gp.player.fatiguePoints--;
                 invincible = true;
             }
         }
@@ -326,6 +373,8 @@ public class Player extends Entity{
             gp.iTile[i].playSE();
             gp.iTile[i].life--;
             gp.iTile[i].invincible = true;
+            
+            gp.player.fatiguePoints--;
             
             if(gp.iTile[i].life==0){
             gp.iTile[i]= gp.iTile[i].getDestroyedForm();
