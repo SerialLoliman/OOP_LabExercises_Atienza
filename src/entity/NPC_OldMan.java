@@ -34,15 +34,30 @@ public class NPC_OldMan extends Entity {
     }
         public void setDialogue(){
             
-            dialogues[0] = "Press >E< to check your\ninventory and stats " ;
-            dialogues[1] = "Press >Z< to use your melee\nor interact";
-            dialogues[2] = "Press >X< to use your skill\nrock throw";
-            dialogues[3] = "Be careful out there";
+            dialogues[0] = "Press >E< to check your\ninventory and stats\n\n(Game Saved!) " ;
+            dialogues[1] = "Press >Z< to use your melee\nor interact\n\n(Game Saved!)";
+            dialogues[2] = "Press >X< to use your skill\nrock throw\n\n(Game Saved!)";
+            dialogues[3] = "Be careful out there\n\n\n(Game Saved!)";
+            
 
             
         }
         public void setAction(){
             
+            if(onPath == true){
+                
+//                //set old man's route when talking to him (make sure you have all of the old man's directions though)
+//                int goalCol = 22;
+//                int goalRow = 16;
+
+                //Follows the player
+                int goalCol = (gp.player.worldX + gp.player.solidArea.x)/gp.tileSize;
+                int goalRow = (gp.player.worldY + gp.player.solidArea.y)/gp.tileSize;
+                
+                searchPath(goalCol, goalRow);
+            
+            }
+            else{
             actionLockCounter++;
             if(actionLockCounter == 120){
                 
@@ -63,10 +78,16 @@ public class NPC_OldMan extends Entity {
             }
             actionLockCounter = 0;
             }
-            
         }
+            }
+            
         public void speak(){
             //DO CHARACTER STUFF
             super.speak();
+            
+            gp.saveLoad.save();
+            
+
+//            onPath = true;
         }
 }

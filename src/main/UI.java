@@ -95,7 +95,17 @@ public void draw(Graphics2D g2){
         drawCharaterScreen();
         drawInventory();
     }
+    
+    
+    
+    
+    //GAMEOVER STATE
+    if(gp.gameState == gp.gameOverState){
+        drawGameOverScreen();
+    }
+    
 }
+
 public void drawPlayerLife(){
     
     //gp.player.life = 3;
@@ -206,21 +216,21 @@ public void drawTitleScreen(){
         g2.drawString(">", x-gp.tileSize, y);
     }
     
-    // g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20));
-    // text = "LOAD GAME";
-    // x = getXforCenteredText(text);
-    // y += gp.tileSize;
-    // g2.drawString(text, x, y);
-    // if(commandNum == 1){
-    //     g2.drawString(">", x-gp.tileSize, y);
-    // }
+    g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20));
+    text = "LOAD GAME";
+    x = getXforCenteredText(text);
+    y += gp.tileSize;
+    g2.drawString(text, x, y);
+    if(commandNum == 1){
+        g2.drawString(">", x-gp.tileSize, y);
+    }
         
     g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20));
     text = "QUIT TO DESKTOP";
     x = getXforCenteredText(text);
     y += gp.tileSize;
     g2.drawString(text, x, y);
-    if(commandNum == 1/*CHANGE THIS BACK TO 2 IF YOU RE-IMPLEMENT THE LOAD GAME*/){
+    if(commandNum == 2/*CHANGE THIS BACK TO 2 IF YOU RE-IMPLEMENT THE LOAD GAME OTHERWISE, ITS 1*/){
         g2.drawString(">", x-gp.tileSize, y);
     }
     }
@@ -395,7 +405,7 @@ public void drawCharaterScreen(){
 //    g2.drawImage(gp.player.currentShield.down1, tailX - gp.tileSize, textY + 34, null);
 
     //FATIGUE
-    value = String.valueOf(gp.player.fatigue);
+    value = String.valueOf(gp.player.fatiguePoints);
     textX = getXforAlignToRightText(value, tailX);
     g2.drawString(value, textX, textY);
         textY += lineHeight;
@@ -470,6 +480,43 @@ public void drawInventory(){
     }
     
 }
+
+public void drawGameOverScreen(){
+
+    g2.setColor(new Color(0,0,0,150));
+    g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+    
+    int x;
+    int y;
+    String text;
+    g2.setFont(g2.getFont().deriveFont(Font.BOLD,110f));
+
+    text = "You Died";
+    //Shadow
+    g2.setColor(Color.black);
+    x = getXforCenteredText(text);
+    y = gp.tileSize*4;
+    g2.drawString(text, x, y);
+    //Main
+    g2.setColor(Color.white);
+    g2.drawString(text, x-4, y-4);
+    
+    //Retry
+    g2.setFont(g2.getFont().deriveFont(50f));
+    text = "Retry";
+    x = getXforCenteredText(text);
+    y += gp.tileSize*4;
+    g2.drawString(text, x, y);
+    if(commandNum == 0) {g2.drawString(">", x-40, y);}
+    
+    //Back to the Title Screen
+    text = "Quit";
+    x = getXforCenteredText(text);
+    y += 55;
+    g2.drawString(text, x, y);
+    if(commandNum == 1) {g2.drawString(">", x-40, y);}
+}
+
 public int getItemIndexOnSlot(){
     int itemIndex = slotCol + (slotRow * 5);
     

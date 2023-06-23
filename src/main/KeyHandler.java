@@ -7,7 +7,7 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener{
     
     GamePanel gp;
-    public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed, spacePressed, shotKeyPressed, sleeping;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed, spacePressed, shotKeyPressed;
     
     //DEBUG
     boolean checkDrawTime = false;
@@ -43,6 +43,12 @@ public class KeyHandler implements KeyListener{
         //CHARACTER STATE
         else if(gp.gameState == gp.characterState){
             characterState(code); 
+        }
+            
+        
+        //GAME OVER STATE
+        else if(gp.gameState == gp.gameOverState){
+            gameOverState(code); 
         }  
     }
     
@@ -64,13 +70,17 @@ public class KeyHandler implements KeyListener{
             //NEW GAME
             if(gp.ui.commandNum == 0){
                 gp.gameState = gp.playState;
+                gp.playMusic(0);
             }
             //LOAD GAME
             if(gp.ui.commandNum == 1){
-                //to be added
+                gp.saveLoad.load();
+                gp.gameState = gp.playState;
+                gp.playMusic(0);
+                
             }
             //QUIT TO DESKTOP
-            if(gp.ui.commandNum == 2){
+            if(gp.ui.commandNum == 2){//CHANGE TO == 2 IF RE-IMPLEMENTING LOAD GAME AND BACK to == 1 IF REMOVING THE LOAD GAME
                 System.exit(0);
             }
         }
@@ -95,6 +105,7 @@ public class KeyHandler implements KeyListener{
         //PAUSE
         if(code == KeyEvent.VK_P){
             gp.gameState = gp.pauseState;
+            gp.aSetter.setMonster();
         }
         
         //START DIALOGUE & ATTACK
@@ -103,13 +114,7 @@ public class KeyHandler implements KeyListener{
             gp.player.fatiguePoints--;
         }
         
-        //SLEEP
-        if(code == KeyEvent.VK_S){
-            if(sleeping == true){sleeping = false;}
-            else{
-                sleeping = true; 
-                gp.player.fatiguePoints = 1000;}
-        }
+        
         
         //OPEN CHARACTER STATS
         if(code == KeyEvent.VK_E){
@@ -118,7 +123,7 @@ public class KeyHandler implements KeyListener{
         //PROJECTILE
         if(code == KeyEvent.VK_X){
             shotKeyPressed = true;
-            gp.player.fatiguePoints--;
+            gp.player.fatiguePoints-=10;
         }
         
         
@@ -131,6 +136,13 @@ public class KeyHandler implements KeyListener{
             checkDrawTime = false;
             }
         }
+//        if (code == KeyEvent.VK_R){
+//            switch(gp.currentMap){
+//                case 0: gp.tileM.loadMap("/res/maps/world03.txt"), 0); break;
+//                case 1: gp.tileM.loadMap("/res/maps/world02.txt"), 1); break;
+//            }
+//        }
+        
     }
     public void pauseState(int code){
             if(code == KeyEvent.VK_P){
@@ -177,6 +189,25 @@ public class KeyHandler implements KeyListener{
             gp.player.selectItem();
         }
     }
+    
+    public void gameOverState(int code) {
+    
+    if(code == KeyEvent.VK_UP) {gp.ui.commandNum--;
+    if(gp.ui.commandNum<0){gp.ui.commandNum=1;}
+    gp.playSE(9);
+    }
+    if(code == KeyEvent.VK_DOWN) {gp.ui.commandNum++;
+    if(gp.ui.commandNum>1){gp.ui.commandNum=0;}
+    gp.playSE(9);
+    }
+    if(code == KeyEvent.VK_Z) {
+    if(gp.ui.commandNum==0){gp.gameState = gp.playState; gp.resetGame(false);}
+    else if (gp.ui.commandNum==1){gp.gameState = gp.titleState; gp.resetGame(true);}
+    }
+    
+    
+    }
+    
     @Override
     public void keyReleased(KeyEvent e){
     

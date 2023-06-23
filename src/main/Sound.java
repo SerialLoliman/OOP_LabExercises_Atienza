@@ -20,6 +20,9 @@ public Sound(){
     soundURL[4] = getClass().getResource("/res/sound/applause.wav");
     soundURL[5] = getClass().getResource("/res/sound/MemeVictory.wav");
     soundURL[6] = getClass().getResource("/res/sound/woodchop.wav");
+    
+    
+    soundURL[9] = getClass().getResource("/res/sound/choose.wav");
 }
 
 public void setFile(int i){

@@ -17,7 +17,7 @@ public class Entity {
     public String name;
     public int speed;
     
-    public BufferedImage up1, up2,up3, down1, down2, down3, left1, left2, left3, right1, right2, right3, sleep;
+    public BufferedImage up1, up2,up3, down1, down2, down3, left1, left2, left3, right1, right2, right3;
     public BufferedImage attackUp1, attackUp2,attackDown1,attackDown2, attackLeft1, attackLeft2, attackRight1, attackRight2;
     public BufferedImage image, image2, image3;
     
@@ -45,6 +45,7 @@ public class Entity {
     public boolean alive = true;
     public boolean dying = false;
     boolean hpBarOn = false;
+    public boolean onPath = false;
     
     
     //COUNTER
@@ -127,18 +128,62 @@ public class Entity {
     public void use(Entity entity){}
     public void checkDrop(){}
     public void dropItem(Entity droppedItem){
-        for(int i = 0; i < gp.obj.length; i++){
-            if(gp.obj[i] == null){
-                gp.obj[i] =  droppedItem;
-                gp.obj[i].worldX = worldX;
-                gp.obj[i].worldY = worldY;
+        for(int i = 0; i < gp.obj[1].length; i++){
+            if(gp.obj[gp.currentMap][i] == null){
+                gp.obj[gp.currentMap][i] =  droppedItem;
+                gp.obj[gp.currentMap][i].worldX = worldX;
+                gp.obj[gp.currentMap][i].worldY = worldY;
                 break;
             }
         }
     }
-    public void update(){
+    
+    public Color getParticleColor(){
+    
+        Color color = null;
+    return color;
+    }
+    
+    public int getParticleSize(){
+    
+        int size = 0;
+        return size;
+    
+    }
+    
+    public int getParticleSpeed(){
+    
+        int speed = 0;
+        return speed;
+    
+    }
+    
+    public int getParticleMaxLife(){
+    
+        int maxLife = 0;
+        return maxLife;
+    
+    }
+    
+
+    public void generateParticle(Entity generator, Entity target){
+    
+        Color color = generator.getParticleColor();
+        int size = generator.getParticleSize();
+        int speed = generator.getParticleSpeed();
+        int maxLife = generator.getParticleMaxLife();
         
-        setAction();
+        Particle pl = new Particle(gp, target, color, size, speed, maxLife, -2, -1);
+        Particle p2 = new Particle(gp, target, color, size, speed, maxLife, 2, -1);
+        Particle p3 = new Particle(gp, target, color, size, speed, maxLife, -2, 1);
+        Particle p4 = new Particle(gp, target, color, size, speed, maxLife, 2, 1);
+        gp.particleList.add(pl);
+        gp.particleList.add(p2);
+        gp.particleList.add(p3);
+        gp.particleList.add(p4);
+    }
+    
+    public void checkCollision(){
         
         collisionOn = false;
         gp.cChecker.checkTile(this);
@@ -151,6 +196,13 @@ public class Entity {
         if (this.type == type_monster && contactPlayer == true){
             damagePlayer(attack);
         }
+    
+    }
+    public void update(){
+        
+        setAction();
+        checkCollision();
+        
         
         //IF COLLISION IS FALSE, NPC CAN MOVE
         if(collisionOn == false){
@@ -290,4 +342,78 @@ public class Entity {
         }
         return image;
     }
+        public void searchPath(int goalCol, int goalRow){
+            
+            int startCol = (worldX + solidArea.x)/gp.tileSize;
+            int startRow = (worldY + solidArea.y)/gp.tileSize;
+            
+            gp.pFinder.setNodes(startCol, startRow, goalCol, goalRow, this);
+            
+            if(gp.pFinder.search() == true){
+                
+                //Next worldX and worldY
+                int nextX = gp.pFinder.pathList.get(0).col*gp.tileSize;
+                int nextY = gp.pFinder.pathList.get(0).row*gp.tileSize;
+                
+                //Entity's solidArea position
+                int enLeftX = worldX + solidArea.x;
+                int enRightX = worldX + solidArea.x + solidArea.width;
+                int enTopY = worldY + solidArea.y;
+                int enBottomY = worldY + solidArea.y + solidArea.height;
+                
+                if(enTopY > nextY && enLeftX >= nextX && enRightX < nextX + gp.tileSize) {
+                    direction = "up";
+                }
+                else if (enTopY < nextY && enLeftX >= nextX && enRightX < nextX + gp.tileSize){
+                    direction = "down";
+                }
+                else if (enTopY >= nextY && enBottomY < nextY + gp.tileSize){
+                    //left or right
+                    if(enLeftX > nextX) {
+                        direction = "left";
+                    }
+                    if(enLeftX < nextX) {
+                        direction = "right";
+                    }
+                    else if (enTopY > nextY && enLeftX > nextX){
+                        //up or left
+                        direction = "up";
+                        checkCollision();
+                        if(collisionOn == true){
+                            direction = "left";
+                        }
+                    }
+                    else if (enTopY > nextY && enLeftX < nextX){
+                        //up or right
+                        direction = "up";
+                        checkCollision();
+                        if(collisionOn == true){
+                            direction = "right";
+                        }
+                    }
+                    else if(enTopY < nextY && enLeftX > nextX){
+                        //down or left
+                        direction = "down";
+                        checkCollision();
+                        if(collisionOn == true){
+                            direction = "left";
+                        }
+                    }
+                    else if(enTopY < nextY && enLeftX < nextX){
+                        //down or right
+                        direction = "down";
+                        checkCollision();
+                        if(collisionOn == true){
+                            direction = "right";
+                        }
+                    }
+                        //If reaches the goal, stop the search
+                        int nextCol = gp.pFinder.pathList.get(0).col;
+                        int nextRow = gp.pFinder.pathList.get(0).row;
+                        if(nextCol == goalCol && nextRow == goalRow){
+                            onPath = false;
+                        }
+                }
+            }
+        }
 }

@@ -1,5 +1,7 @@
 package main;
 
+import ai.PathFinder;
+import ai.data.SaveLoad;
 import entity.Entity;
 import entity.Player;
 import java.awt.Color;
@@ -30,12 +32,14 @@ public class GamePanel extends JPanel implements Runnable{
     //WORLD SETTINGS
     public final int maxWorldCol = 50;
     public final int maxWorldRow = 50;
+    public final int maxMap = 10;
+    public int currentMap = 0;
     
     //FPS
     int FPS = 60;
     
     //SYSTEM
-    TileManager tileM = new TileManager(this);
+    public TileManager tileM = new TileManager(this);
     public KeyHandler keyH = new KeyHandler(this);
     Sound music = new Sound();
     Sound se = new Sound();
@@ -43,15 +47,19 @@ public class GamePanel extends JPanel implements Runnable{
     public  AssetSetter aSetter = new AssetSetter(this);
     public UI ui = new UI(this);
     public EventHandler eHandler = new EventHandler(this);
+    
+    public PathFinder pFinder = new PathFinder (this);
+    public SaveLoad saveLoad = new SaveLoad(this);
     Thread gameThread;
     
     //ENTITY and OBJECT
     public Player player = new Player(this,keyH);
-    public Entity obj[] = new Entity[20]; //Object Slots
-    public Entity npc[] = new Entity[10]; //NPC Slots
-    public Entity monster[] = new Entity[20]; //Monster Slots
-    public InteractiveTile iTile[] = new InteractiveTile[50];//Interactive Tile Slots
+    public Entity obj[][] = new Entity[maxMap][20]; //Object Slots
+    public Entity npc[][] = new Entity[maxMap][10]; //NPC Slots
+    public Entity monster[][] = new Entity[maxMap][20]; //Monster Slots
+    public InteractiveTile iTile[][] = new InteractiveTile[maxMap][50];//Interactive Tile Slots
     public ArrayList<Entity> projectileList = new ArrayList<>();
+    public ArrayList<Entity> particleList = new ArrayList<>();
     ArrayList<Entity> entityList = new ArrayList<>();
     
     //GAME STATE
@@ -61,6 +69,8 @@ public class GamePanel extends JPanel implements Runnable{
     public final int pauseState = 2;
     public final int dialogueState = 3;
     public final int characterState = 4;
+    
+    public final int gameOverState = 6;
     
     public GamePanel(){
     
@@ -82,6 +92,35 @@ public class GamePanel extends JPanel implements Runnable{
         gameState = titleState;
         
     }
+    
+    public void resetGame(boolean restart){
+        player.setDefaultPositions();
+        player.restoreStatus();
+        aSetter.setNPC();
+        aSetter.setMonster();
+        
+        if (restart == true){
+        player.setDefaultValues();
+        aSetter.setObject();
+        aSetter.setInteractiveTile();
+        }
+    }
+    
+//    public void retry(){
+//        player.setDefaultPositions();
+//        player.restoreLifeAndMana();
+//        aSetter.setNPC();
+//        aSetter.setMonster();}
+//    
+//    public void restart(){
+//        player.setDefaultValues();
+//        player.setDefaultPositions();
+//        player.restoreLifeAndMana();
+//        player.setItems();
+//        aSetter.setObject();
+//        aSetter.setNPC();
+//        aSetter.setMonster();
+//        aSetter.setInteractiveTile();}
     
     public void startGameThread(){
     
@@ -182,19 +221,19 @@ public class GamePanel extends JPanel implements Runnable{
             //PLAYER
             player.update();
             //NPC
-            for(int i = 0; i < npc.length; i++){
-                if(npc[i] != null){
-                    npc[i].update();
+            for(int i = 0; i < npc[1].length; i++){
+                if(npc[currentMap][i] != null){
+                    npc[currentMap][i].update();
                 }
             }
-            for(int i = 0; i < monster.length; i++){
-                if(monster[i] != null){
-                    if(monster[i].alive == true && monster[i].dying == false){
-                    monster[i].update();
+            for(int i = 0; i < monster[1].length; i++){
+                if(monster[currentMap][i] != null){
+                    if(monster[currentMap][i].alive == true && monster[currentMap][i].dying == false){
+                    monster[currentMap][i].update();
                     }
-                    if(monster[i].alive == false){
-                        monster[i].checkDrop();
-                        monster[i] = null;
+                    if(monster[currentMap][i].alive == false){
+                        monster[currentMap][i].checkDrop();
+                        monster[currentMap][i] = null;
                     }
                 }
             }
@@ -208,10 +247,20 @@ public class GamePanel extends JPanel implements Runnable{
                     }
                 }
             }
-            for (int i = 0; i< iTile.length; i++) {
+            for(int i = 0; i < particleList.size(); i++){
+                if(particleList.get(i) != null){
+                    if(particleList.get(i).alive == true){
+                    particleList.get(i).update();
+                    }
+                    if(particleList.get(i).alive == false){
+                        particleList.remove(i);
+                    }
+                }
+            }
+            for (int i = 0; i< iTile[1].length; i++) {
             
-                if (iTile[i] != null) {
-                    iTile[i].update();
+                if (iTile[currentMap][i] != null) {
+                    iTile[currentMap][i].update();
                 }
             }
         }
@@ -243,34 +292,34 @@ public class GamePanel extends JPanel implements Runnable{
         tileM.draw(g2);//this one first before drawing the player and other stuff unless you want the tile to cover your player
         
         //INTERACTIVE TILE
-        for(int i = 0; i< iTile.length; i++){
-            if (iTile[i] != null) {
-                iTile[i].draw(g2);
+        for(int i = 0; i< iTile[1].length; i++){
+            if (iTile[currentMap][i] != null) {
+                iTile[currentMap][i].draw(g2);
             }
         }
         
         //ADD ENTITIES TO THE LIST
         entityList.add(player);
         
-        for(int i = 0; i< npc.length; i++){
+        for(int i = 0; i< npc[1].length; i++){
         
-        if (npc[i] != null) {
-        entityList.add(npc[i]);
+        if (npc[currentMap][i] != null) {
+        entityList.add(npc[currentMap][i]);
             }
         }
         
-        for(int i = 0; i < obj.length; i++) {
+        for(int i = 0; i < obj[1].length; i++) {
         
-        if(obj[i] != null) {
+        if(obj[currentMap][i] != null) {
         
-            entityList.add(obj[i]);
+            entityList.add(obj[currentMap][i]);
             }
         }
-        for(int i = 0; i < monster.length; i++) {
+        for(int i = 0; i < monster[1].length; i++) {
         
-        if(monster[i] != null) {
+        if(monster[currentMap][i] != null) {
         
-            entityList.add(monster[i]);
+            entityList.add(monster[currentMap][i]);
             }
         }
         for(int i = 0; i < projectileList.size(); i++) {
@@ -278,6 +327,13 @@ public class GamePanel extends JPanel implements Runnable{
         if(projectileList.get(i) != null) {
         
             entityList.add(projectileList.get(i));
+            }
+        }
+        for(int i = 0; i < particleList.size(); i++) {
+        
+        if(particleList.get(i) != null) {
+        
+            entityList.add(particleList.get(i));
             }
         }
         
