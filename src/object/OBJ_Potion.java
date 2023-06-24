@@ -18,8 +18,9 @@ public class OBJ_Potion extends Entity {
     }
     public void use(Entity entity){
         gp.gameState = gp.dialogueState;
-        gp.ui.currentDialogue = "You drink" + name + "\n Health restored";
+        gp.ui.currentDialogue = "You consumed a " + name + "!\nHealth restored!";
         entity.life += value;
         entity.hungerPoints += 5000;
+        entity.mana += value;
     }
 }

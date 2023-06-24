@@ -154,6 +154,7 @@ public void drawPlayerLife(){
         g2.drawImage(manaF, x, y, null);
         i++;
         x += 35;
+        
     }
 }
 public void drawMessage(){
@@ -319,7 +320,7 @@ public void drawCharaterScreen(){
     textY += lineHeight;
     g2.drawString("HEALTH", textX, textY);
     textY += lineHeight;
-    g2.drawString("ENERGY", textX, textY);
+    g2.drawString("MANA", textX, textY);
     textY += lineHeight;
     g2.drawString("STRENGTH", textX, textY);
     textY += lineHeight;

@@ -37,13 +37,13 @@ public class OBJ_Rock extends Projectile{
     }
         public boolean haveResource(Entity user){
         boolean haveResource = false;
-        if(user.ammo >= useCost){
+        if(user.mana >= useCost){
             haveResource = true;
         }
         return haveResource;
     }
     public void subtractResource(Entity user){
-        user.ammo -= useCost;
+        user.mana -= useCost;
     }
     public Color getParticleColor(){
     
