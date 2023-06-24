@@ -1,0 +1,1 @@
+monster.MON_Skeleton
